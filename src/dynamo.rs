@@ -43,21 +43,26 @@ pub fn dynamo() {
     match client.create_table(table_input).sync() {
       Ok(table_output) => {
          println!("creada");
-         let mut item : PutItemInput =  Default::default();
-         item.table_name= "rusty_table".to_string();
-         let mut map = HashMap::new();
-         let mut valorIndex : AttributeValue = Default::default();
-         let mut valorCampo0 : AttributeValue = Default::default();
-         valorIndex.n=Some("123".to_string());
-         valorCampo0.s=Some("unvalor".to_string());
-         map.insert("index".to_string(),valorIndex);
-         map.insert("campo0".to_string(),valorCampo0);
-         item.item = map;
-         client.put_item(item);
       }
      Err(error) => {
       println!("Error: {:?}", error);
      }
       
    }
+}
+
+pub fn writeItem() {
+     let client = DynamoDbClient::new(Region::UsEast1);
+     let mut item : PutItemInput =  Default::default();
+     item.table_name= "rusty_table".to_string();
+     let mut map = HashMap::new();
+     let mut valorIndex : AttributeValue = Default::default();
+     let mut valorCampo0 : AttributeValue = Default::default();
+     valorIndex.n=Some("123".to_string());
+     valorCampo0.s=Some("unvalor".to_string());
+     map.insert("index".to_string(),valorIndex);
+     map.insert("campo0".to_string(),valorCampo0);
+     item.item = map;
+     client.put_item(item).sync() ;
+
 }
